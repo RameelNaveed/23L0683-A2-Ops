@@ -1,0 +1,78 @@
+# Training presets. One preset = one MLflow run.
+# Run one:   python -m trainer train effb0_ft
+# Run all:   python -m trainer train --all
+#
+# Each preset differs from the one named in `compare_to` by a single change,
+# which is what makes the Task 3.5 comparison fair.
+
+defaults:
+  img_size: 224
+  batch_size: 32
+  augment: true          # random crop, flip and JPEG re-compression (train split only)
+  balance: true          # draw AI and real images 50/50 in every training batch
+  weight_decay: 0.0001   # AdamW
+  dropout: 0.3
+  patience: 5            # early stopping on val_loss
+  logging: manual        # manual | autolog
+  seed: 42
+
+experiments:
+  cnn_base:
+    family: cnn
+    phases:
+      - {epochs: 20, lr: 0.002}
+
+  cnn_noaug:
+    compare_to: cnn_base
+    family: cnn
+    augment: false
+    phases:
+      - {epochs: 20, lr: 0.002}
+
+  effb0_frozen:
+    family: transfer
+    backbone: efficientnetb0
+    phases:
+      - {epochs: 12, lr: 0.001, unfreeze: none}
+
+  effb0_ft:
+    compare_to: effb0_frozen
+    family: transfer
+    backbone: efficientnetb0
+    phases:
+      - {epochs: 12, lr: 0.001, unfreeze: none}
+      - {epochs: 8, lr: 0.00002, unfreeze: top}
+
+  effb0_ft_lr1e-4:
+    compare_to: effb0_ft
+    family: transfer
+    backbone: efficientnetb0
+    phases:
+      - {epochs: 12, lr: 0.001, unfreeze: none}
+      - {epochs: 8, lr: 0.0001, unfreeze: top}
+
+  effb0_ft_192:
+    compare_to: effb0_ft
+    family: transfer
+    backbone: efficientnetb0
+    img_size: 192
+    phases:
+      - {epochs: 12, lr: 0.001, unfreeze: none}
+      - {epochs: 8, lr: 0.00002, unfreeze: top}
+
+  mnv2_ft:
+    compare_to: effb0_ft
+    family: transfer
+    backbone: mobilenetv2
+    phases:
+      - {epochs: 12, lr: 0.001, unfreeze: none}
+      - {epochs: 8, lr: 0.00002, unfreeze: top}
+
+  effb0_ft_autolog:
+    compare_to: effb0_ft
+    family: transfer
+    backbone: efficientnetb0
+    logging: autolog
+    phases:
+      - {epochs: 12, lr: 0.001, unfreeze: none}
+      - {epochs: 8, lr: 0.00002, unfreeze: top}

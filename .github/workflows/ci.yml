@@ -1,0 +1,32 @@
+# Task 6.6 (apply): lint, test and build the VisionGuard image on every push.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-ci.txt
+      - name: Lint
+        run: flake8 app visionguard trainer api/server.py tests
+      - name: Tests
+        run: pytest -q
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the web image
+        run: docker build -t visionguard-web:ci .
+      - name: Show image size
+        run: docker images visionguard-web:ci

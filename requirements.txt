@@ -1,0 +1,19 @@
+# Development and training environment (Windows or Linux).
+tensorflow==2.20.0
+keras-tuner
+mlflow>=3.1
+dvc
+dagshub
+pandas
+pillow
+matplotlib
+scikit-learn
+pyyaml
+python-dotenv
+flask
+waitress
+sqlalchemy
+psycopg2-binary
+requests
+pytest
+flake8

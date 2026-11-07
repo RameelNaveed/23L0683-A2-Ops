@@ -1,0 +1,23 @@
+# Keep the build context small and keep secrets out of the image.
+.env
+.env.*
+!.env.example
+.git
+.github
+.venv
+.dvc
+data
+outputs
+trainer
+experiments.yaml
+scripts
+models
+mlruns
+mlflow.db
+tuner_runs
+labs
+tests
+api
+__pycache__
+*.pyc
+*.dvc

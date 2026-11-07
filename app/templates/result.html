@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Result | VisionGuard{% endblock %}
+{% block content %}
+<section class="card">
+  <p class="muted">Result for <b>{{ filename }}</b> (record #{{ row_id }})</p>
+  <div class="verdict {{ 'ai' if r.label == 'AI-generated' else 'real' }}">{{ r.label }}</div>
+  <div class="meter"><div style="width: {{ (r.confidence * 100)|round(1) }}%"></div></div>
+  <p class="big">Confidence {{ (r.confidence * 100)|round(1) }}%</p>
+  <table class="kv">
+    <tr><th>Probability AI</th><td>{{ r.prob_ai }}</td></tr>
+    <tr><th>Decision threshold</th><td>{{ r.threshold }}</td></tr>
+    <tr><th>Model</th><td>{{ r.model_name }} ({{ r.model_version }})</td></tr>
+    <tr><th>Served by</th><td>{{ r.mode }} inference, {{ r.latency_ms }} ms</td></tr>
+  </table>
+  <p class="caveat"><b>Please read:</b> {{ caveat }}</p>
+  <a class="btn" href="{{ url_for('index') }}">Check another image</a>
+  <a class="btn ghost" href="{{ url_for('history') }}">View history</a>
+</section>
+{% endblock %}

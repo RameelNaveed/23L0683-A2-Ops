@@ -1,0 +1,10 @@
+# Web app image (Task 6.2). CPU only TensorFlow: no CUDA libraries, much smaller.
+# Match the TensorFlow version you trained with.
+tensorflow-cpu==2.20.0
+flask==3.1.*
+gunicorn==23.*
+sqlalchemy==2.0.*
+psycopg2-binary==2.9.*
+pillow==11.*
+requests==2.32.*
+python-dotenv==1.*

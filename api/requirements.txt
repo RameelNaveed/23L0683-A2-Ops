@@ -1,0 +1,5 @@
+# Match the TensorFlow version you trained with (python -c "import tensorflow as tf; print(tf.__version__)")
+tensorflow-cpu==2.20.0
+flask==3.1.*
+gunicorn==23.*
+pillow==11.*

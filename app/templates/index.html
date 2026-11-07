@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card hero">
+  <h1>Is this image AI generated?</h1>
+  <p class="muted">Upload a JPG or PNG (up to {{ max_mb|round(1) }} MB). The image is analysed in memory and never stored.</p>
+  <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" class="upload">
+    <label class="drop" for="image">
+      <input id="image" name="image" type="file" accept=".jpg,.jpeg,.png" required>
+      <span id="fname">Choose an image&hellip;</span>
+    </label>
+    <img id="preview" alt="" hidden>
+    <button type="submit">Analyse</button>
+  </form>
+  <p class="tiny">Inference mode: <b>{{ mode }}</b></p>
+</section>
+<script>
+  const input = document.getElementById('image');
+  input.addEventListener('change', () => {
+    const f = input.files[0]; if (!f) return;
+    document.getElementById('fname').textContent = f.name;
+    const img = document.getElementById('preview');
+    img.src = URL.createObjectURL(f); img.hidden = false;
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+# secrets
+.env
+.dvc/config.local
+# environments and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# data and models live in DVC / MLflow, not Git
+/data/raw
+/models/*.keras
+/outputs/runs/
+/tuner_runs/
+mlflow.db
+mlruns/
+mlartifacts/
+visionguard.db
+instance/
+# deploy copies
+api/visionguard/
+api/champion.keras

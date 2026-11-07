@@ -1,0 +1,8 @@
+# Task 6.4 "before" image, kept only to measure the size difference.
+# Full Debian base, full tensorflow wheel (GPU libraries pulled in), pip cache kept, everything copied.
+FROM python:3.11
+WORKDIR /srv
+COPY . .
+RUN sed 's/tensorflow-cpu/tensorflow/' requirements-serve.txt > req.txt && pip install -r req.txt
+EXPOSE 5000
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app.wsgi:app"]

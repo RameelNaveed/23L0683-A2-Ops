@@ -1,0 +1,8 @@
+# Light set for GitHub Actions tests (no TensorFlow: tests use a fake predictor).
+flask==3.1.*
+sqlalchemy==2.0.*
+pillow==11.*
+requests==2.32.*
+python-dotenv==1.*
+pytest
+flake8
