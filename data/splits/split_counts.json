@@ -1,0 +1,18 @@
+{
+  "seed": 42,
+  "train": {
+    "total": 681,
+    "ai": 377,
+    "real": 304
+  },
+  "val": {
+    "total": 145,
+    "ai": 81,
+    "real": 64
+  },
+  "test": {
+    "total": 148,
+    "ai": 80,
+    "real": 68
+  }
+}
