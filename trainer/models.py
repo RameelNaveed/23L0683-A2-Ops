@@ -26,12 +26,12 @@ def separable_cnn(size, adapt_ds, dropout=0.3):
     inp = keras.Input((size, size, 3), name="pixels")
     x = norm(inp)
     x = layers.Conv2D(24, 5, strides=2, padding="same", use_bias=False, name="stem_conv")(x)
-    x = layers.BatchNormalization(name="stem_bn")(x)
+    x = layers.BatchNormalization(momentum=0.9, name="stem_bn")(x)
     x = layers.ReLU(name="stem_relu")(x)
     for s, width in enumerate((48, 96, 192), start=1):
         for k in ("a", "b"):
             x = layers.SeparableConv2D(width, 3, padding="same", use_bias=False, name=f"s{s}{k}_sep")(x)
-            x = layers.BatchNormalization(name=f"s{s}{k}_bn")(x)
+            x = layers.BatchNormalization(momentum=0.9, name=f"s{s}{k}_bn")(x)
             x = layers.ReLU(name=f"s{s}{k}_relu")(x)
         x = layers.MaxPooling2D(2, name=f"s{s}_pool")(x)
     x = layers.GlobalAveragePooling2D(name="pool")(x)
