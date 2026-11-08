@@ -1,13 +1,13 @@
-# VisionGuard: AI vs Real image classifier (ROLLNO_A2_Ops)
+# VisionGuard: AI vs Real image classifier (23L0683_A2_Ops)
 
-![CI](https://github.com/<github-user>/ROLLNO_A2_Ops/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/RameelNaveed/23L0683_A2_Ops/actions/workflows/ci.yml/badge.svg)
 
 Upload an image, get a verdict (AI generated or real), a confidence value and an honest caveat.
 Every request is stored in a database and listed on the History page.
 
 | Link | |
 |---|---|
-| DagsHub (code, data, MLflow) | https://dagshub.com/<dagshub-user>/ROLLNO_A2_Ops |
+| DagsHub (code, data, MLflow) | https://dagshub.com/RameelNaveed/23L0683_A2_Ops |
 | Model API (Cloud Run) | https://<service>.run.app |
 
 ## Layout
