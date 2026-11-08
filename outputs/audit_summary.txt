@@ -1,0 +1,41 @@
+== Files per class ==
+           files  unreadable  exact_extra_copies  kept
+category                                              
+AiArtData    539           0                   1   538
+RealArt      436           0                   0   436
+
+== Width (px) ==
+             min     50%     max
+category                        
+AiArtData  225.0  1024.0  6000.0
+RealArt    183.0   920.0  8495.0
+
+== Height (px) ==
+             min    50%     max
+category                       
+AiArtData  135.0  800.0  4001.0
+RealArt    158.0  720.0  7091.0
+
+== File size (KB) ==
+            min    50%     max
+category                      
+AiArtData  11.5  195.1  5494.3
+RealArt    11.0  141.4  9956.4
+
+== Colour modes ==
+colour_mode  L   P  RGB  RGBA
+category                     
+AiArtData    1  14  489    35
+RealArt      6   9  407    14
+
+== Encodings ==
+encoding   JPEG  PNG
+category            
+AiArtData   429  110
+RealArt     403   33
+
+Unreadable files: 0
+Exact duplicate files beyond the first copy: 1
+Near duplicate groups (same dHash, different bytes): 29
+Files whose picture appears in both classes: 0
+Files kept for splitting: 974
