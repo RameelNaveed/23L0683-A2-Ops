@@ -1,0 +1,5 @@
+# Vercel model API (Task 7). No TensorFlow: the LiteRT interpreter runs the .tflite model.
+ai-edge-litert==2.3.0
+numpy==2.5.4
+pillow==13.0.0
+flask==3.1.3

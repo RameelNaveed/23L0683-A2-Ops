@@ -1,0 +1,4 @@
+,spearman_rho_with_val_auc
+unfreeze_layers,0.756
+lr,0.575
+dropout,-0.23

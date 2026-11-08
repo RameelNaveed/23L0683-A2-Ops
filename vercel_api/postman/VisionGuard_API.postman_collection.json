@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "VisionGuard Model API (Vercel) - Task 7",
+    "description": "Tests for the VisionGuard TFLite model API hosted on Vercel.\nSet the collection variable apiKey (Collection > Variables) to the MODEL_API_KEY value from .env before running.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://visionguard-api-dusky.vercel.app" },
+    { "key": "apiKey", "value": "PASTE_MODEL_API_KEY_HERE" }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "console.log(`[${pm.info.requestName}] HTTP ${pm.response.code} in ${pm.response.responseTime} ms`);",
+          "console.log(pm.response.text());",
+          "pm.test('Response time under 15 s', () => pm.expect(pm.response.responseTime).to.be.below(15000));",
+          "pm.test('Response is JSON', () => pm.response.to.be.json);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health check",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "const j = pm.response.json();",
+        "pm.test('API status ok', () => pm.expect(j.status).to.eql('ok'));",
+        "pm.test('Model loaded (224x224 TFLite)', () => pm.expect(j.model.img_size).to.eql(224));",
+        "pm.test('API key configured on server', () => pm.expect(j.api_key_configured).to.be.true);"
+      ] } }]
+    },
+    {
+      "name": "2. Predict - AI-generated image",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/predict",
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "image", "type": "file", "src": "D:/University/MLops/23L0683_Assignment2_Mlops/23L0683_Assignment2/data/raw/AiArtData/AiArtData/10352-original.jpg" }
+        ] }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "const j = pm.response.json();",
+        "pm.test('Has verdict fields', () => pm.expect(j).to.include.keys('label','prob_ai','confidence','threshold','model_version'));",
+        "console.log(`VERDICT: ${j.label}  prob_ai=${j.prob_ai}  confidence=${j.confidence}  server latency=${j.latency_ms} ms`);"
+      ] } }]
+    },
+    {
+      "name": "3. Predict - AI-generated PNG",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/predict",
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "image", "type": "file", "src": "D:/University/MLops/23L0683_Assignment2_Mlops/23L0683_Assignment2/data/raw/AiArtData/AiArtData/1235748-ai-animals.png" }
+        ] }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "const j = pm.response.json();",
+        "console.log(`VERDICT: ${j.label}  prob_ai=${j.prob_ai}  confidence=${j.confidence}  server latency=${j.latency_ms} ms`);"
+      ] } }]
+    },
+    {
+      "name": "4. Predict - Real photo",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/predict",
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "image", "type": "file", "src": "D:/University/MLops/23L0683_Assignment2_Mlops/23L0683_Assignment2/data/raw/RealArt/RealArt/1-shutterstock_588634790.jpg" }
+        ] }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "const j = pm.response.json();",
+        "console.log(`VERDICT: ${j.label}  prob_ai=${j.prob_ai}  confidence=${j.confidence}  server latency=${j.latency_ms} ms`);"
+      ] } }]
+    },
+    {
+      "name": "5. Predict - Real photo 2",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/predict",
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "image", "type": "file", "src": "D:/University/MLops/23L0683_Assignment2_Mlops/23L0683_Assignment2/data/raw/RealArt/RealArt/161026190832-kelvin-okafor-hyper-real-images.jpg" }
+        ] }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "const j = pm.response.json();",
+        "console.log(`VERDICT: ${j.label}  prob_ai=${j.prob_ai}  confidence=${j.confidence}  server latency=${j.latency_ms} ms`);"
+      ] } }]
+    },
+    {
+      "name": "6. Security - no API key (expect 401)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/predict",
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "image", "type": "file", "src": "D:/University/MLops/23L0683_Assignment2_Mlops/23L0683_Assignment2/data/raw/AiArtData/AiArtData/10352-original.jpg" }
+        ] }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Rejected with 401', () => pm.response.to.have.status(401));"
+      ] } }]
+    },
+    {
+      "name": "7. Validation - fake image (expect 422)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/predict",
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "image", "type": "file", "src": "D:/University/MLops/23L0683_Assignment2_Mlops/23L0683_Assignment2/fake.png" }
+        ] }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Rejected with 422', () => pm.response.to.have.status(422));"
+      ] } }]
+    },
+    {
+      "name": "8. Validation - missing image field (expect 400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "X-API-Key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/predict"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Rejected with 400', () => pm.response.to.have.status(400));"
+      ] } }]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "model": "23L0683_A2_Ops_VisionGuard",
+  "version": "2",
+  "alias": "champion",
+  "run_id": "04bff1a6c3224d6bb8da275b38dc4a42",
+  "preset": "effb0_ft_lr1e-4",
+  "threshold": 0.81
+}

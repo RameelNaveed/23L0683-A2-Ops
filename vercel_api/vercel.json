@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "{model/**,preprocess_pil.py,validation.py}",
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api/index?__vg_path=/$1" }]
+}
